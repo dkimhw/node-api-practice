@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 const authRouter = require('./routes/authRoutes');
+const userRouter = require('./routes/userRoutes');
 const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
@@ -28,6 +29,8 @@ app.get('/api/v1', (req, res) => {
 });
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
+
 
 // Error handling middlewares
 app.use(notFoundMiddleware);
