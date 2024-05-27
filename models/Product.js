@@ -39,6 +39,7 @@ const ProductSchema = new mongoose.Schema({
     },
     colors: {
       type: [String],
+      default: ["#222"],
       required: true,
     },
     featured: {
@@ -66,3 +67,5 @@ const ProductSchema = new mongoose.Schema({
   },
   { timestamps: true },
 );
+
+module.exports = mongoose.model('Product', ProductSchema);
