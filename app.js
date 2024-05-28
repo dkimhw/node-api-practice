@@ -7,6 +7,7 @@ const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
 const productRouter = require('./routes/productRoutes');
 const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
 
 require('dotenv').config();
 require('express-async-errors');
@@ -18,6 +19,8 @@ const app = express();
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(express.static('./public'));
+app.use(fileUpload());
 
 // Routes
 app.get('/', (req, res) => {
