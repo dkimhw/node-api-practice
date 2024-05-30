@@ -29,7 +29,11 @@ const createReview = async (req, res, next) => {
 
 const getAllReviews = async (req, res, next) => {
   try {
-    const reviews = await Review.find({});
+    const reviews = await Review.find({}).populate({
+      path: 'product',
+      select: 'name company price'
+    });
+
     if (!reviews) throw new CustomError.BadRequestError('No reviews found');
 
     res.status(StatusCodes.OK).json({ reviews, count: reviews?.length });
@@ -40,7 +44,10 @@ const getAllReviews = async (req, res, next) => {
 
 const getAllReviewsByProduct = async (req, res, next) => {
   try {
-    const reviews = await Review.find({ product: req.params.productId });
+    const reviews = await Review.find({ product: req.params.productId }).populate({
+      path: 'product',
+      select: 'name company price'
+    });
     if (!reviews) throw new CustomError.BadRequestError('No reviews found');
 
     res.status(StatusCodes.OK).json({ reviews, count: reviews?.length });

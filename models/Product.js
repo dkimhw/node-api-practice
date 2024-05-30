@@ -1,7 +1,5 @@
 
 const mongoose = require('mongoose');
-const validator = require('validator');
-
 
 const ProductSchema = new mongoose.Schema({
     name: {
@@ -63,9 +61,16 @@ const ProductSchema = new mongoose.Schema({
       type: mongoose.Types.ObjectId,
       ref: 'User',
       required: true
-    }
+    },
   },
-  { timestamps: true },
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true }, }
 );
+
+ProductSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'product',
+  justOne: false,
+})
 
 module.exports = mongoose.model('Product', ProductSchema);
