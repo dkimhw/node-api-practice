@@ -44,10 +44,7 @@ const getAllReviews = async (req, res, next) => {
 
 const getAllReviewsByProduct = async (req, res, next) => {
   try {
-    const reviews = await Review.find({ product: req.params.productId }).populate({
-      path: 'product',
-      select: 'name company price'
-    });
+    const reviews = await Review.find({ product: req.params.id });
     if (!reviews) throw new CustomError.BadRequestError('No reviews found');
 
     res.status(StatusCodes.OK).json({ reviews, count: reviews?.length });
